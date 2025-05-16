@@ -1,0 +1,160 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Disparo de E-mail API",
+      "version": "1.0.0",
+      "description": "API para gerenciamento e disparo de e-mails com m\u00faltiplos destinat\u00e1rios via fila."
+    },
+    "paths": {
+      "/api/email-disparo": {
+        "get": {
+          "summary": "Listar disparos de e-mail",
+          "responses": {
+            "200": {
+              "description": "Lista de disparos de e-mail",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/EmailDisparo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Enviar novo disparo de e-mail",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDisparoInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Disparo criado com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EmailDisparo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/email-disparo/{codigo}": {
+        "get": {
+          "summary": "Buscar disparo de e-mail por c\u00f3digo",
+          "parameters": [
+            {
+              "name": "codigo",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalhes do disparo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EmailDisparo"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Disparo n\u00e3o encontrado"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "EmailDisparo": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "titulo": {
+              "type": "string"
+            },
+            "remetente": {
+              "type": "string"
+            },
+            "corpo": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updated_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "destinatarios": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "enviado_em": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EmailDisparoInput": {
+          "type": "object",
+          "required": [
+            "titulo",
+            "remetente",
+            "corpo",
+            "destinatarios"
+          ],
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "remetente": {
+              "type": "string",
+              "format": "email"
+            },
+            "corpo": {
+              "type": "string"
+            },
+            "destinatarios": {
+              "type": "string",
+              "example": "teste@a.com,test2@a.com"
+            }
+          }
+        }
+      }
+    }
+  }
