@@ -2,31 +2,6 @@
 
 namespace App\Services;
 
-
-use App\Enums\FormaDePagamento;
-use App\Enums\TipoLink;
-use App\Enums\TipoNotificacaoAdministrativa;
-use App\Enums\URL;
-use App\Jobs\EnviarEmailGenericoJob;
-use App\Jobs\EnviarEmailJob;
-use App\Jobs\EnviarMensagemWhatsapp;
-use App\Jobs\EnviarTemplateWhatsapp;
-use App\Models\Cobrancas;
-use App\Models\ConfiguracaoWhatsapp;
-use App\Models\Estabelecimento;
-use App\Models\LinkCurto;
-use App\Models\Notificacao;
-use App\Models\Usuario;
-use App\Services\Whatsapp\Templates\EnviarTemplate;
-use App\Services\Whatsapp\WhatsappBaseServico;
-use App\Services\Whatsapp\WppConnectServico;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Throwable;
-
 class RotinasComum
 {
     public static function validarEmail($email)
